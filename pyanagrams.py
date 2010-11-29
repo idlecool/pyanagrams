@@ -1,4 +1,35 @@
+"""
+Command Line Options:
+-h --help : Prints the instruction on how to use this module
+
+Exposed Methods:
+	    getAnagrams(word)
+	    getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
+	    getMoreAnagrams(anagram[,language][,t][,d][,include][,exclude][,n][,m][,a][,l][,q][,k])
+
+For Usage and Docs:
+            >>> import pyanagrams
+            >>> pyanagrams.getAnagrams.__doc__
+            >>> pyanagrams.getGif.__doc__
+            >>> pyanagrams.getMoreAnagrams.__doc__
+
+"Copyright (c) 2010 Shiv Deepak"
+
+Disclaimer:
+The author of this module kept the code as bug free as possible, but the Anagram Server is located a 'http://wordsmith.org/anagram/', 
+The author should not be held responsible for the reliability of data from the anagram server or what so ever.
+Users should use this code on their own risk.
+"""
+
+__author__ = "Shiv Deepak (idlecool@gmail.com)"
+__version__ = "$Revision: 0.11 $"
+__date__ = "$Date: 2010/11/29 22:19:59 $"
+__copyright__ = "Copyright (c) 2010 Shiv Deepak"
+__license__ = "GPL"
+
 import urllib
+import sys
+import getopt
 from BeautifulSoup import BeautifulSoup
 servicedomain = 'http://wordsmith.org'
 webservice = 'http://wordsmith.org/anagram/'
@@ -148,3 +179,34 @@ class AdvAnagramExcept(Exception):
         self.value = value
     def __str__(self):
         return self.value
+
+def _usage():
+    """ prints instructions on how to use this module """
+    print __doc__
+
+if __name__ == "__main__":
+    argv = sys.argv[1:]
+    try:
+        opts, args = getopt.getopt(argv, "h", ["help"])
+    except getopt.GetoptError:
+        _usage()
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            _usage()
+            sys.exit()
+    if args:
+        anagram = " ".join(args)
+    else:
+        anagram = "Anagrams"
+    anagramlist = getAnagrams(anagram)
+    print "Word:"
+    print "    "+anagram
+    print
+    print "Anagrams:"
+    if anagramlist:
+        for eachanagram in anagramlist:
+            print "    "+eachanagram
+    else:
+        print "    No Anagrams Possible"
+    print

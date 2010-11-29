@@ -1,16 +1,24 @@
+pyanagrams 0.11
+===============
+
 Many thanks to: http://wordsmith.org/anagram/ for their anagram server
 
-This is the 3rd release of pyanagrams
+Works on:
+	Python 2.6.x and later
 
-Version 0.1
+Dependency:
+	Beautiful Soup
 
-Dependancy:
-* urllib
-* Beautiful Soup
+Exposed Methods:
+	getAnagrams(word)
+	getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
+	getMoreAnagrams(anagram[,language][,t][,d][,include][,exclude][,n][,m][,a][,l][,q][,k])
 
-Exposed Method(s)
-* getAnagrams(word)
-* getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
+For Usage:
+>>> import pyanagrams
+>>> pyanagrams.getAnagrams.__doc__
+>>> pyanagrams.getGif.__doc__
+>>> pyanagrams.getMoreAnagrams.__doc__
 
 Examples:
 
@@ -32,6 +40,4 @@ Examples:
 ['Gravamens Prayer', 'Gravamen Respray', 'Gravamen Sprayer', 
 	    	     	       ... 
 			       	   'Maven Respray Gar', 'Maven Respray Rag']
->>> #for more info on getMoreAnagrams()
->>> pyanagrams.getMoreAnagrams().__doc__
 
