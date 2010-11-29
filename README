@@ -1,4 +1,4 @@
-pyanagrams 0.11
+pyanagrams 0.2
 ===============
 
 Many thanks to: http://wordsmith.org/anagram/ for their anagram server
@@ -10,32 +10,32 @@ Dependency:
 	Beautiful Soup
 
 Exposed Methods:
-	getAnagrams(word)
-	getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
-	getMoreAnagrams(anagram[,language][,t][,d][,include][,exclude][,n][,m][,a][,l][,q][,k])
+	getanagrams(word)
+	getGIF(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
+	getmoreanagrams(anagram[,language][,t][,d][,include][,exclude][,n][,m][,a][,l][,q][,k])
 
 For Usage:
 >>> import pyanagrams
->>> pyanagrams.getAnagrams.__doc__
->>> pyanagrams.getGif.__doc__
->>> pyanagrams.getMoreAnagrams.__doc__
+>>> pyanagrams.getanagrams.__doc__
+>>> pyanagrams.getGIF.__doc__
+>>> pyanagrams.getmoreanagrams.__doc__
 
 Examples:
 
 >>> import pyanagrams
 >>> word = 'pyanagramserver'
->>> anagrams = pyanagrams.getAnagrams(word)
+>>> anagrams = pyanagrams.getanagrams(word)
 >>> print anagrams
 ['Gravamens Prayer', 'Gravamen Respray', 'Gravamen Sprayer', 
 	    	     	       ... 
 			       	   'Maven Respray Gar', 'Maven Respray Rag']
 >>>
->>> imgstream = getGif(word, 'Gravamens Prayer')
+>>> imgstream = getGIF(word, 'Gravamens Prayer')
 >>> file = open('anagram.gif','w')
 >>> file.write(imgstream)
 >>> file.close()
 >>>
->>> anagrams = pyanagrams.getMoreAnagrams(word)
+>>> anagrams = pyanagrams.getmoreanagrams(word)
 >>> print anagrams
 ['Gravamens Prayer', 'Gravamen Respray', 'Gravamen Sprayer', 
 	    	     	       ... 

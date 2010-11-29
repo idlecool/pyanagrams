@@ -1,23 +1,43 @@
-"""
-Command Line Options:
+#!/usr/bin/env python
+"""Command Line Options:
 -h --help : Prints the instruction on how to use this module
 
 Exposed Methods:
-	    getAnagrams(word)
-	    getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay])
-	    getMoreAnagrams(anagram[,language][,t][,d][,include][,exclude][,n][,m][,a][,l][,q][,k])
+    getanagrams(word)
+    getGIF(sourceString,
+           targetString,
+           [textColor,]
+           [backgroundColor,]
+           [border_color,]
+           [delay,]
+           )
+    getmoreanagrams(anagram,
+                    [language,]
+                    [t,]
+                    [d,]
+                    [include,]
+                    [exclude,]
+                    [n,]
+                    [m,]
+                    [a,]
+                    [l,]
+                    [q,]
+                    [k,]
+                    )
 
 For Usage and Docs:
-            >>> import pyanagrams
-            >>> pyanagrams.getAnagrams.__doc__
-            >>> pyanagrams.getGif.__doc__
-            >>> pyanagrams.getMoreAnagrams.__doc__
+    >>> import pyanagrams
+    >>> pyanagrams.getanagrams.__doc__
+    >>> pyanagrams.getGIF.__doc__
+    >>> pyanagrams.getmoreanagrams.__doc__
 
 "Copyright (c) 2010 Shiv Deepak"
 
 Disclaimer:
-The author of this module kept the code as bug free as possible, but the Anagram Server is located a 'http://wordsmith.org/anagram/', 
-The author should not be held responsible for the reliability of data from the anagram server or what so ever.
+The author of this module kept the code as bug free as possible,
+but the Anagram Server is located a 'http://wordsmith.org/anagram/', 
+The author should not be held responsible for the reliability of data
+from the anagram server or what so ever.
 Users should use this code on their own risk.
 """
 
@@ -30,14 +50,19 @@ __license__ = "GPL"
 import urllib
 import sys
 import getopt
+
 from BeautifulSoup import BeautifulSoup
+
 servicedomain = 'http://wordsmith.org'
 webservice = 'http://wordsmith.org/anagram/'
-urlprefix = 'anagram.cgi?anagram='
-urlsuffix = '&t=1000&a=n'
 
-def getAnagrams(word):
-    """ Gets anagrams for given word, return value will be a list how to call: getAnagram(str(word)) """
+def getanagrams(word):
+    """Gets anagrams for given word,
+return value will be a list,
+how to call: getanagram(str(word))
+"""
+    urlprefix = 'anagram.cgi?anagram='
+    urlsuffix = '&t=1000&a=n'
     processurl = webservice+urlprefix+word+urlsuffix
     stream = urllib.urlopen(processurl).read()
     soup = BeautifulSoup(stream)
@@ -49,11 +74,29 @@ def getAnagrams(word):
     wordlist = wordstring.split('\n<br />\n')[1:-1]
     return wordlist
 
-def getGif(sourceString,targetString,textColor='#00FFFF',backgroundColor='#FF0000',border_color='#000000',delay='slow'):
-    """ Gets the GIF animation for provided anagram, return value will be a binary stream, how to call: getGif(sourceString,targetString[,textColor][,backgroundColor][,border_color][,delay]) all colour should be RGB Hex coded ex: #FF09E7 and delay has three options ['fast','medium','slow']"""
-    # anagram check fot source and target strings
-    sourceString=sourceString.lower()
-    targetString=targetString.lower()
+
+def getGIF(sourceString,\
+               targetString,\
+               textColor='#00FFFF',\
+               backgroundColor='#FF0000',\
+               border_color='#000000',\
+               delay='slow',\
+               ):
+    """Gets the GIF animation for provided anagram,
+return value will be a binary stream,
+how to call: getGIF(sourceString,
+                    targetString,
+                    [textColor,]
+                    [backgroundColor,]
+                    [border_color,]
+                    [delay,]
+                    )
+all colour should be RGB Hex coded ex: #FF09E7 
+and delay has three options ['fast','medium','slow']
+"""
+    #Anagram check for source and target strings.
+    sourceString = sourceString.lower()
+    targetString = targetString.lower()
     sName = list(sourceString)
     tName = list(targetString)
     for i in xrange(sName.count(' ')):
@@ -65,12 +108,21 @@ def getGif(sourceString,targetString,textColor='#00FFFF',backgroundColor='#FF000
     for char in sName:
         try:
             tName.remove(char)
-        except:
+        except Exception:
             raise AnagramException(sName, tName)
     
-    #prepare url to generate gif
+    #Prepare url to generate gif.
     gifcgi = 'animation.cgi?'
-    processurl=webservice+gifcgi+urllib.urlencode({'sourceString':sourceString, 'submit':'Generate Animated Gif', 'targetString':targetString, 'textColor':textColor, 'backgroundColor':backgroundColor, 'border_color':border_color, 'delay':delay })
+    processurl = webservice +\
+        gifcgi +\
+        urllib.urlencode({'sourceString':sourceString,\
+                              'submit':'Generate Animated Gif',\
+                              'targetString':targetString,\
+                              'textColor':textColor,\
+                              'backgroundColor':backgroundColor,\
+                              'border_color':border_color,\
+                              'delay':delay,\
+                              })
     stream = urllib.urlopen(processurl).read()
     soup = BeautifulSoup(stream)
     body = soup.contents[2]
@@ -81,19 +133,43 @@ def getGif(sourceString,targetString,textColor='#00FFFF',backgroundColor='#FF000
     urlpath = imgelement.split('"')[1]
     imgurl = servicedomain + urlpath
     
-    #fetch the gif image
+    #Fetch the gif image.
     stream = urllib.urlopen(imgurl).read()
     return stream
 
-def getMoreAnagrams(anagram, language='english', t='1000', d='', include='', exclude='', n='', m='', a='n', l='n', q='n', k='1'):
-    """
-    SYNTAX:
+
+def getmoreanagrams(anagram,\
+                        language='english',\
+                        t='1000',\
+                        d='',\
+                        include='',\
+                        exclude='',\
+                        n='',\
+                        m='',\
+                        a='n',\
+                        l='n',\
+                        q='n',\
+                        k='1',\
+                        ):
+    """SYNTAX:
     
-         getMoreAnagrams(anagram, language, t, d, include, exclude, n, m, a, l, q, k)
+         getmoreanagrams(anagram,
+                         [language,]
+                         [t,]
+                         [d,]
+                         [include,]
+                         [exclude,]
+                         [n,]
+                         [m,]
+                         [a,]
+                         [l,]
+                         [q,]
+                         [k,]
+                         )
 
          return value will be a list
     
-    OPTIONS:
+OPTIONS:
 
       i) anagram: Word/phrase to be anagrammed: any value except ""
 
@@ -145,7 +221,18 @@ def getMoreAnagrams(anagram, language='english', t='1000', d='', include='', exc
     source = 'adv'
     if len(anagram) == 0:
         raise AdvAnagramExcept('Anagram String Is Empty!!!')
-    if language not in ['english','english-obscure','german','spanish','french','italian','latin','dutch','portuguese','swedish','names']:
+    if language not in ['english',\
+                            'english-obscure',\
+                            'german',\
+                            'spanish',\
+                            'french',\
+                            'italian',\
+                            'latin',\
+                            'dutch',\
+                            'portuguese',\
+                            'swedish',\
+                            'names',\
+                            ]:
         raise AdvAnagramExcept('Language not supported')
     if a not in ['y','n']:
         raise AdvAnagramExcept("value of 'Repeat occurrences of a word OK' should be either 'y' or 'n'")
@@ -155,8 +242,23 @@ def getMoreAnagrams(anagram, language='english', t='1000', d='', include='', exc
         raise AdvAnagramExcept("value of 'Show line numbers with anagrams' should be either 'y' or 'n'")
     if k not in ['0','1','2']:
         raise AdvAnagramExcept('value of a should be either str(0) or str(1) or str(2)')
-    urlprefix='anagram.cgi?'
-    processurl = webservice+urlprefix+urllib.urlencode({ 'anagram' : anagram, 'submit': submit, 'language': language, 't':t, 'd':d, 'include':include, 'exclude':exclude, 'n':n, 'm':m, 'a':a, 'l':l, 'q':q, 'k':k})
+    urlprefix = 'anagram.cgi?'
+    processurl = webservice +\
+        urlprefix +\
+        urllib.urlencode({ 'anagram' : anagram,\
+                               'submit': submit,\
+                               'language': language,\
+                               't':t,\
+                               'd':d,\
+                               'include':include,\
+                               'exclude':exclude,\
+                               'n':n,\
+                               'm':m,\
+                               'a':a,\
+                               'l':l,\
+                               'q':q,\
+                               'k':k,\
+                               })
     stream = urllib.urlopen(processurl).read()
     soup = BeautifulSoup(stream)
     body = soup.contents[2]
@@ -167,12 +269,18 @@ def getMoreAnagrams(anagram, language='english', t='1000', d='', include='', exc
     wordlist = wordstring.split('\n<br />\n')[1:-1]
     return wordlist
     
+
 class AnagramException(Exception):
     def __init__(self, sName, tName):
         self.sName = sName
         self.tName = tName
     def __str__(self):
-        return "'"+self.sName+"' & '"+self.tName+"' are not anagrams!!!"
+        return "'" +\
+            self.sName +\
+            "' & '" +\
+            self.tName +\
+            "' are not anagrams!!!"
+
 
 class AdvAnagramExcept(Exception):
     def __init__(self, value):
@@ -180,8 +288,9 @@ class AdvAnagramExcept(Exception):
     def __str__(self):
         return self.value
 
+
 def _usage():
-    """ prints instructions on how to use this module """
+    """Prints instructions on how to use this module """
     print __doc__
 
 if __name__ == "__main__":
@@ -199,14 +308,14 @@ if __name__ == "__main__":
         anagram = " ".join(args)
     else:
         anagram = "Anagrams"
-    anagramlist = getAnagrams(anagram)
+    anagramlist = getanagrams(anagram)
     print "Word:"
     print "    "+anagram
     print
     print "Anagrams:"
     if anagramlist:
         for eachanagram in anagramlist:
-            print "    "+eachanagram
+            print "    " + eachanagram
     else:
         print "    No Anagrams Possible"
     print
