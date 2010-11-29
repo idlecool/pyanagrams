@@ -1,8 +1,12 @@
 Many thanks to: http://wordsmith.org/anagram/ for their anagram server
 
-This is the 2nd release of pyanagrams
+This is the 3nd release of pyanagrams
 
-Version 0.02
+Version 0.1
+
+Dependancy:
+* urllib
+* Beautiful Soup
 
 Exposed Method(s)
 * getAnagrams(word)
@@ -22,4 +26,12 @@ Examples:
 >>> file = open('anagram.gif','w')
 >>> file.write(imgstream)
 >>> file.close()
+>>>
+>>> anagrams = pyanagrams.getMoreAnagrams(word)
+>>> print anagrams
+['Gravamens Prayer', 'Gravamen Respray', 'Gravamen Sprayer', 
+	    	     	       ... 
+			       	   'Maven Respray Gar', 'Maven Respray Rag']
+>>> #for more info on getMoreAnagrams()
+>>> pyanagrams.getMoreAnagrams().__doc__
 
