@@ -42,7 +42,7 @@ Users should use this code on their own risk.
 """
 
 __author__ = "Shiv Deepak (idlecool@gmail.com)"
-__version__ = "$Revision: 0.11 $"
+__version__ = "$Revision: 0.2 $"
 __date__ = "$Date: 2010/11/29 22:19:59 $"
 __copyright__ = "Copyright (c) 2010 Shiv Deepak"
 __license__ = "GPL"
